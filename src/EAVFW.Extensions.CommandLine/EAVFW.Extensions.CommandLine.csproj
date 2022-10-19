@@ -4,7 +4,7 @@
 	  <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
 	  <Title>EAVFW.Extensions.CommandLine</Title>
 	  <Authors>Poul Kjeldager</Authors>
-	  <Description>Extension for Security Model for EAVFW Application Building</Description>
+	  <Description>System.CommandLine Extensions for building better CLIs</Description>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
 	  <RepositoryUrl>https://github.com/EAVFW/EAVFW.Extensions.CommandLine</RepositoryUrl>
   </PropertyGroup>
@@ -14,5 +14,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+	  <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta4.22272.1" />
 	</ItemGroup>
 </Project>
