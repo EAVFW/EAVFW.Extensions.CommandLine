@@ -137,8 +137,17 @@ namespace System.CommandLine
         public static IServiceCollection AddConsoleApp<TCommand>(this IServiceCollection services) where TCommand : RootCommand
         {
             services.AddSingleton<ConsoleHostedService<TCommand>>();
+            services.AddHostedService(sp => sp.GetRequiredService<ConsoleHostedService<TCommand>>());
             return services.AddSingleton<TCommand>();
         }
+        public static IHostBuilder AddConsoleApp<TCommand>(this IHostBuilder hostbuilder) where TCommand : RootCommand
+        {
+            hostbuilder.ConfigureServices((_,services) =>services.AddConsoleApp<TCommand>());
+
+            return hostbuilder;
+
+        }
+
         public static async Task<int> RunConsoleApp<TApp>(this IHost host ) where TApp : RootCommand
         {
             var app = host.Services.GetRequiredService<ConsoleHostedService<TApp>>();
