@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
+	  <TargetFrameworks>netcoreapp3.1;net6.0;net8.0</TargetFrameworks>
 	  <Title>EAVFW.Extensions.CommandLine</Title>
 	  <Authors>Poul Kjeldager</Authors>
 	  <Description>System.CommandLine Extensions for building better CLIs</Description>
@@ -26,5 +26,10 @@
 	<ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+	</ItemGroup>
+	
+	<ItemGroup Condition="'$(TargetFramework)'=='net8.0'">
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
 	</ItemGroup>
 </Project>
