@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.CommandLine.Invocation;
@@ -58,13 +59,13 @@ namespace System.CommandLine
                         typeof(COmmandExtensions).GetMethod(nameof(CreateArgument), 1, new[] { typeof(string) })
                             ?.MakeGenericMethod(prop.PropertyType).Invoke(null,
                                 new object[]
-                                    {
-                                        prop.GetCustomAttribute<DescriptionAttribute>()?.Description
-                                    });
+                                {
+                                    prop.GetCustomAttribute<DescriptionAttribute>()?.Description
+                                });
 
 
                     if (argument is not Argument a) continue;
-                    
+
                     output.Add(prop.Name, a);
                     command.Add(a);
                 }
@@ -72,7 +73,7 @@ namespace System.CommandLine
 
             return output;
         }
-        
+
         public static Dictionary<string, Option> AddOptions(this Command command)
         {
             var o = new Dictionary<string, Option>();
@@ -103,6 +104,11 @@ namespace System.CommandLine
                     foreach (var a in aliass.Skip(1))
                     {
                         op.AddAlias(a.Alias);
+                    }
+
+                    if (typeof(IEnumerable).IsAssignableFrom(prop.PropertyType))
+                    {
+                        op.AllowMultipleArgumentsPerToken = true;
                     }
 
                     o[prop.Name] = op;
@@ -139,6 +145,7 @@ namespace System.CommandLine
                 {
                     cmd.GetType().GetProperty(o.Key).SetValue(cmd, parsed.GetValueForOption(o.Value));
                 }
+
                 foreach (var (key, argument) in arguments)
                 {
                     cmd.GetType().GetProperty(key)!.SetValue(cmd, parsed.GetValueForArgument(argument));
